@@ -10,16 +10,36 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    // MARK: UI's elements
+    @IBOutlet weak var syncButton: UIButton!
+    @IBOutlet weak var statusLabel: UILabel!
+    
+
+    // MARK: View's lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated);
+        self.initialize();
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    
+    // MARK: View's action handlers
+    @IBAction func syncButtonTouchAction(sender: AnyObject) {
+        
+    }
+    
+    
+    // MARK: View's private method
+    private func initialize() {
+        
+    }
 }
 

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="AddressBookSync" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +16,48 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Syncing is in progress. Please wait." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5B-5G-hIT">
+                                <rect key="frame" x="0.0" y="120" width="600" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="8l5-Ts-1Gz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-BoldItalic" family="Helvetica Neue" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U2h-v2-eJN">
+                                <rect key="frame" x="167.5" y="220" width="265" height="65"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="uA6-Mc-3L3"/>
+                                    <constraint firstAttribute="width" constant="265" id="xGa-DK-sIv"/>
+                                </constraints>
+                                <state key="normal" title="Check address book changes" backgroundImage="ButtonBackground"/>
+                                <connections>
+                                    <action selector="syncButtonTouchAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="a9j-4Z-O20"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="K5B-5G-hIT" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="100" id="1Mg-YY-Uad"/>
+                            <constraint firstItem="K5B-5G-hIT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="S4W-5L-Ft9"/>
+                            <constraint firstItem="U2h-v2-eJN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Uid-hh-Twt"/>
+                            <constraint firstItem="U2h-v2-eJN" firstAttribute="top" secondItem="K5B-5G-hIT" secondAttribute="bottom" constant="50" id="dUt-mV-FhI"/>
+                            <constraint firstAttribute="trailing" secondItem="K5B-5G-hIT" secondAttribute="trailing" id="zEA-X6-uZy"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="statusLabel" destination="K5B-5G-hIT" id="gLr-Yt-T3O"/>
+                        <outlet property="syncButton" destination="U2h-v2-eJN" id="BcI-sZ-43d"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="258" y="327"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ButtonBackground" width="310" height="83"/>
+    </resources>
 </document>
