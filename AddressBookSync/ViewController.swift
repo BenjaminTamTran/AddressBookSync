@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AddressBook
+import AddressBookUI
 
 class ViewController: UIViewController {
 
@@ -15,6 +17,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var statusLabel: UILabel!
     
 
+    // MARK: Class's properties
+    
+    
     // MARK: View's lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,12 +38,46 @@ class ViewController: UIViewController {
     
     // MARK: View's action handlers
     @IBAction func syncButtonTouchAction(sender: AnyObject) {
-        
+        authorizeToAccessADB()
     }
     
     
     // MARK: View's private method
     private func initialize() {
+        
+    }
+    
+    private func authorizeToAccessADB() {
+        let authorizationStatus = ABAddressBookGetAuthorizationStatus()
+        switch authorizationStatus {
+        case .Denied, .Restricted:
+            self.statusLabel.text = "Go to Setting/Privacy to grant access Address Book."
+        case .Authorized:
+            syncAddressBook()
+        case .NotDetermined:
+            promptForAddressBookRequestAccess()
+            print("Not Determined")
+        }
+    }
+    
+    private func promptForAddressBookRequestAccess() {
+        let addressBookRef: ABAddressBook = ABAddressBookCreateWithOptions(nil, nil).takeRetainedValue()
+        ABAddressBookRequestAccessWithCompletion(addressBookRef) {
+            (granted: Bool, error: CFError!) in
+            dispatch_async(dispatch_get_main_queue()) {
+                if !granted {
+                    self.statusLabel.text = "Denied to access Address Book."
+                } else {
+                    self.statusLabel.text = "Authorized to access Address Book."
+                    self.syncAddressBook()
+                }
+            }
+        }
+    }
+    
+    private func syncAddressBook() {
+        self.statusLabel.text = "Syncing is in progress. Please wait."
+        self.syncButton.hidden = true
         
     }
 }

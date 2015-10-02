@@ -257,6 +257,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.benjaminsoft.AddressBookSync;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6fe8e88b-f899-4d2f-9178-854b4e410ba1";
 			};
 			name = Debug;
 		};
@@ -269,6 +270,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.benjaminsoft.AddressBookSync;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6fe8e88b-f899-4d2f-9178-854b4e410ba1";
 			};
 			name = Release;
 		};

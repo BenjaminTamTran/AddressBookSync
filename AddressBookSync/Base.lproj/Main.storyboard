@@ -17,17 +17,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Syncing is in progress. Please wait." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5B-5G-hIT">
-                                <rect key="frame" x="0.0" y="120" width="600" height="50"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Syncing is in progress. Please wait." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5B-5G-hIT">
+                                <rect key="frame" x="10" y="120" width="580" height="75"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="8l5-Ts-1Gz"/>
+                                    <constraint firstAttribute="height" constant="75" id="8l5-Ts-1Gz"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-BoldItalic" family="Helvetica Neue" pointSize="20"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U2h-v2-eJN">
-                                <rect key="frame" x="167.5" y="220" width="265" height="65"/>
+                                <rect key="frame" x="167.5" y="225" width="265" height="65"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="65" id="uA6-Mc-3L3"/>
                                     <constraint firstAttribute="width" constant="265" id="xGa-DK-sIv"/>
@@ -41,10 +41,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="K5B-5G-hIT" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="100" id="1Mg-YY-Uad"/>
-                            <constraint firstItem="K5B-5G-hIT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="S4W-5L-Ft9"/>
+                            <constraint firstItem="K5B-5G-hIT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="S4W-5L-Ft9"/>
                             <constraint firstItem="U2h-v2-eJN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Uid-hh-Twt"/>
-                            <constraint firstItem="U2h-v2-eJN" firstAttribute="top" secondItem="K5B-5G-hIT" secondAttribute="bottom" constant="50" id="dUt-mV-FhI"/>
-                            <constraint firstAttribute="trailing" secondItem="K5B-5G-hIT" secondAttribute="trailing" id="zEA-X6-uZy"/>
+                            <constraint firstItem="U2h-v2-eJN" firstAttribute="top" secondItem="K5B-5G-hIT" secondAttribute="bottom" constant="30" id="dUt-mV-FhI"/>
+                            <constraint firstAttribute="trailing" secondItem="K5B-5G-hIT" secondAttribute="trailing" constant="10" id="zEA-X6-uZy"/>
                         </constraints>
                     </view>
                     <connections>
