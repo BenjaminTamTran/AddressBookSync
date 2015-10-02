@@ -13,6 +13,7 @@
 		F8F355681BBEBB93000EEA2D /* AddressBookSync.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F8F355661BBEBB93000EEA2D /* AddressBookSync.xcdatamodeld */; };
 		F8F3556A1BBEBB93000EEA2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8F355691BBEBB93000EEA2D /* Assets.xcassets */; };
 		F8F3556D1BBEBB93000EEA2D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8F3556B1BBEBB93000EEA2D /* LaunchScreen.storyboard */; };
+		F8F355751BBEEC31000EEA2D /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F355741BBEEC31000EEA2D /* Config.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		F8F355691BBEBB93000EEA2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F8F3556C1BBEBB93000EEA2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F8F3556E1BBEBB93000EEA2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F8F355741BBEEC31000EEA2D /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				F8F3556B1BBEBB93000EEA2D /* LaunchScreen.storyboard */,
 				F8F3556E1BBEBB93000EEA2D /* Info.plist */,
 				F8F355661BBEBB93000EEA2D /* AddressBookSync.xcdatamodeld */,
+				F8F355741BBEEC31000EEA2D /* Config.swift */,
 			);
 			path = AddressBookSync;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8F355621BBEBB93000EEA2D /* ViewController.swift in Sources */,
+				F8F355751BBEEC31000EEA2D /* Config.swift in Sources */,
 				F8F355681BBEBB93000EEA2D /* AddressBookSync.xcdatamodeld in Sources */,
 				F8F355601BBEBB93000EEA2D /* AppDelegate.swift in Sources */,
 			);
