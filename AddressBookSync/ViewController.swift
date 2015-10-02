@@ -61,23 +61,55 @@ class ViewController: UIViewController {
     }
     
     private func promptForAddressBookRequestAccess() {
-        let addressBookRef: ABAddressBook = ABAddressBookCreateWithOptions(nil, nil).takeRetainedValue()
-        ABAddressBookRequestAccessWithCompletion(addressBookRef) {
-            (granted: Bool, error: CFError!) in
-            dispatch_async(dispatch_get_main_queue()) {
-                if !granted {
-                    self.statusLabel.text = "Denied to access Address Book."
-                } else {
-                    self.statusLabel.text = "Authorized to access Address Book."
-                    self.syncAddressBook()
+        let addressBookRef: ABAddressBook? = ABAddressBookCreateWithOptions(nil, nil).takeRetainedValue()
+        if let _ = addressBookRef {
+            ABAddressBookRequestAccessWithCompletion(addressBookRef) {
+                (granted: Bool, error: CFError!) in
+                dispatch_async(dispatch_get_main_queue()) {
+                    if !granted {
+                        self.statusLabel.text = "Denied to access Address Book."
+                    } else {
+                        self.statusLabel.text = "Authorized to access Address Book."
+                        self.syncAddressBook()
+                    }
                 }
             }
         }
     }
     
     private func syncAddressBook() {
-        self.statusLabel.text = "Syncing is in progress. Please wait."
-        self.syncButton.hidden = true
+        let addressBookRef: ABAddressBook? = ABAddressBookCreateWithOptions(nil, nil).takeRetainedValue()
+        if let _ = addressBookRef {
+            self.statusLabel.text = "Syncing is in progress. Please wait."
+            self.syncButton.hidden = true
+            let allContacts = ABAddressBookCopyArrayOfAllPeople(addressBookRef).takeRetainedValue() as Array
+            for record in allContacts {
+                let contact: ABRecordRef = record
+                var contactFullName = ""
+                if let _ = ABRecordCopyValue(contact, kABPersonFirstNameProperty), let _ = ABRecordCopyValue(contact, kABPersonLastNameProperty) {
+                    let firstName = ABRecordCopyValue(contact, kABPersonFirstNameProperty).takeRetainedValue() as! String
+                    let lastName = ABRecordCopyValue(contact, kABPersonLastNameProperty).takeRetainedValue() as! String
+                    contactFullName = "\(firstName) \(lastName)"
+                }
+                else if let _ = ABRecordCopyValue(contact, kABPersonFirstNameProperty) {
+                    let firstName = ABRecordCopyValue(contact, kABPersonFirstNameProperty).takeRetainedValue() as! String
+                    contactFullName = firstName
+                }
+                else if let _ = ABRecordCopyValue(contact, kABPersonLastNameProperty) {
+                    let lastName = ABRecordCopyValue(contact, kABPersonLastNameProperty).takeRetainedValue() as! String
+                    contactFullName = lastName
+                }
+                print(contactFullName)
+                let contactPhoneNumbers = ABRecordCopyValue(contact, kABPersonPhoneProperty).takeRetainedValue()
+                if ABMultiValueGetCount(contactPhoneNumbers) > 0 {
+                    let contactPhoneNumber = ABMultiValueCopyValueAtIndex(contactPhoneNumbers, 0).takeRetainedValue() as! String
+                    print(contactPhoneNumber)
+                }
+            }
+        }
+    }
+    
+    private func registerListenAddressBookChange() {
         
     }
 }
