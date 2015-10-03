@@ -18,6 +18,6 @@ Details
  
 5. The Comparison output is dialog will show either “No changes” or changed contacts list “<Contact name> <Number, Number>”.
 	
-	![alt tag](http://url/to/img.png)
-	![alt tag](http://url/to/img.png)
-	![alt tag](http://url/to/img.png)
+	![alt tag](https://github.com/BenjaminTamTran/AddressBookSync/blob/master/Assets/Screen%20shoot%201.png)
+	![alt tag](https://github.com/BenjaminTamTran/AddressBookSync/blob/master/Assets/Screen%20shoot%202.png)
+	![alt tag](https://github.com/BenjaminTamTran/AddressBookSync/blob/master/Assets/Screen%20shoot%203.png)
