@@ -17,3 +17,7 @@ Details
 4. If user presses the “Check address book changes” button there should be a comparison made of the local copy of the address book and the real address book from device
  
 5. The Comparison output is dialog will show either “No changes” or changed contacts list “<Contact name> <Number, Number>”.
+	
+	![alt tag](http://url/to/img.png)
+	![alt tag](http://url/to/img.png)
+	![alt tag](http://url/to/img.png)
