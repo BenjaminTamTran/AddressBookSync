@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     
 
     // MARK: Class's properties
-    
+    let def = NSUserDefaults.standardUserDefaults()
     
     // MARK: View's lifecycle
     override func viewDidLoad() {
@@ -35,16 +35,27 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+    
     
     // MARK: View's action handlers
     @IBAction func syncButtonTouchAction(sender: AnyObject) {
-        authorizeToAccessADB()
+        syncAddressBook()
     }
     
     
     // MARK: View's private method
     private func initialize() {
-        
+        if let _ = def.objectForKey(kAddressBookDataKey) {
+            // Already has Address Book in Local
+            self.statusLabel.text = "Sync is done"
+        }
+        else {
+            // run at first time
+            authorizeToAccessADB()
+        }
     }
     
     private func authorizeToAccessADB() {
@@ -53,11 +64,19 @@ class ViewController: UIViewController {
         case .Denied, .Restricted:
             self.statusLabel.text = "Go to Setting/Privacy to grant access Address Book."
         case .Authorized:
-            syncAddressBook()
+//            syncAddressBook()
+            // get Address Book Phone and save to application data
+            saveAddressBookPhoneToLocal()
         case .NotDetermined:
             promptForAddressBookRequestAccess()
             print("Not Determined")
         }
+    }
+    
+    private func saveAddressBookPhoneToLocal() {
+        let addressBookPhone = getAddressBookPhone()
+        def.setObject(addressBookPhone, forKey: kAddressBookDataKey)
+        def.synchronize()
     }
     
     private func promptForAddressBookRequestAccess() {
@@ -69,8 +88,12 @@ class ViewController: UIViewController {
                     if !granted {
                         self.statusLabel.text = "Denied to access Address Book."
                     } else {
-                        self.statusLabel.text = "Authorized to access Address Book."
-                        self.syncAddressBook()
+                        self.statusLabel.text = "Syncing is in progress. Please wait."
+                        self.syncButton.hidden = true
+//                        self.syncAddressBook()
+                        self.saveAddressBookPhoneToLocal()
+                        self.statusLabel.text = "Sync is done"
+                        self.syncButton.hidden = false
                     }
                 }
             }
@@ -79,11 +102,51 @@ class ViewController: UIViewController {
     
     private func syncAddressBook() {
         let addressBookRef: ABAddressBook? = ABAddressBookCreateWithOptions(nil, nil).takeRetainedValue()
+        if let _ = addressBookRef {
+            let addressBookPhone = getAddressBookPhone()
+            if let localAddressBook = def.objectForKey(kAddressBookDataKey) {
+                let localAddressBookArr = localAddressBook as! [Dictionary<String, String>]
+                var isChanged = false
+                for localContact in localAddressBookArr {
+                    for phoneContact in addressBookPhone {
+                        if localContact["ID"] == phoneContact["ID"] {
+                            let name = localContact["Name"]
+                            if name == phoneContact["Name"] {
+                                if localContact["Phone"] != phoneContact["Phone"] {
+                                    isChanged = true
+                                    let phone = phoneContact["Phone"]
+                                    let oldPhone = localContact["Phone"]
+                                    print("Difference Phone in \(oldPhone!) new Phone \(phone!)")
+                                }
+                            }
+                            else {
+                                isChanged = true
+                                print("Difference Name in \(name)")
+                            }
+                        }
+                    }
+                }
+                self.syncButton.hidden = false
+                if isChanged {
+                    self.statusLabel.text = "Done. See the changed contacts in dialog."
+                    showListOfChanged()
+                }
+                else {
+                    self.statusLabel.text = "No changes"
+                }
+            }
+        }
+        else {
+            
+        }
+    }
+    
+    private func getAddressBookPhone() -> [Dictionary<String, String>] {
+        let addressBookRef: ABAddressBook? = ABAddressBookCreateWithOptions(nil, nil).takeRetainedValue()
         var currentContactsList = [Dictionary<String, String>]()
         if let _ = addressBookRef {
             var contactDetails = [String : String]()
-            self.statusLabel.text = "Syncing is in progress. Please wait."
-            self.syncButton.hidden = true
+            self.statusLabel.text = "Checking changes in Address Book..."
             let allContacts = ABAddressBookCopyArrayOfAllPeople(addressBookRef).takeRetainedValue() as Array
             for record in allContacts {
                 let contact: ABRecordRef = record
@@ -114,38 +177,11 @@ class ViewController: UIViewController {
                 currentContactsList.append(contactDetails)
             }
         }
-//        print(currentContactsList)
-        let def = NSUserDefaults.standardUserDefaults()
-        if let savedContacts = def.objectForKey(kAddressBookDataKey) {
-            let savedContactsArray = savedContacts as! [Dictionary<String, String>]
-            var isChanged = false
-            for contact in savedContactsArray {
-                for contactCompare in currentContactsList {
-                    if contact["ID"] == contactCompare["ID"] {
-                        let name = contact["Name"]
-                        if name == contactCompare["Name"] {
-                            if contact["Phone"] != contactCompare["Phone"] {
-                                isChanged = true
-                                let phone = contactCompare["Phone"]
-                                print("Difference Phone in \(phone)")
-                            }
-                        }
-                        else {
-                            isChanged = true
-                            print("Difference Name in \(name)")
-                        }
-                    }
-                }
-            }
-            self.syncButton.hidden = false
-            if !isChanged {
-//                self.statusLabel.text = "Syncing is in progress. Please wait."
-            }
-        }
-        else {
-            def.setObject(currentContactsList, forKey: kAddressBookDataKey)
-            def.synchronize()
-        }
+        return currentContactsList
+    }
+    
+    private func showListOfChanged() {
+        
     }
 }
 
