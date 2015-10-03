@@ -5,7 +5,6 @@ The application is written by Swift 2.0 run on Xcode 7.0, and it works well for 
 
 It supports iPhone/iPod and iPad as well.
 
-	
-	![alt tag](https://github.com/BenjaminTamTran/AddressBookSync/blob/master/Assets/Screen%20shoot%201.png)
-	![alt tag](https://github.com/BenjaminTamTran/AddressBookSync/blob/master/Assets/Screen%20shoot%202.png)
-	![alt tag](https://github.com/BenjaminTamTran/AddressBookSync/blob/master/Assets/Screen%20shoot%203.png)
+![alt tag](https://github.com/BenjaminTamTran/AddressBookSync/blob/master/Assets/Screen%20shoot%201.png)
+![alt tag](https://github.com/BenjaminTamTran/AddressBookSync/blob/master/Assets/Screen%20shoot%202.png)
+![alt tag](https://github.com/BenjaminTamTran/AddressBookSync/blob/master/Assets/Screen%20shoot%203.png)
