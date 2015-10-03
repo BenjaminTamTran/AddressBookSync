@@ -50,11 +50,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBAction func saveChangedTouchAction(sender: AnyObject) {
         saveAddressBookPhoneToLocal()
         closeDialogTouchAction(sender)
+        self.statusLabel.text = "Sync is done"
     }
     
     @IBAction func closeDialogTouchAction(sender: AnyObject) {
         dialogContactChangedBlurEffect.hidden = true
-        self.statusLabel.text = "Sync is done"
         contactChanged.removeAll()
     }
     
@@ -72,14 +72,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     private func authorizeToAccessADB() {
         let authorizationStatus = ABAddressBookGetAuthorizationStatus()
+        
         switch authorizationStatus {
         case .Denied, .Restricted:
             self.statusLabel.text = "Go to Setting/Privacy to grant access Address Book."
         case .Authorized:
-//            syncAddressBook()
+            self.statusLabel.text = "Sync is done"
             // get Address Book Phone and save to application data
             saveAddressBookPhoneToLocal()
         case .NotDetermined:
+            self.statusLabel.text = "Allow app to access Address Book."
             promptForAddressBookRequestAccess()
             print("Not Determined")
         }
@@ -113,80 +115,86 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     private func syncAddressBook() {
-        let addressBookRef: ABAddressBook? = ABAddressBookCreateWithOptions(nil, nil).takeRetainedValue()
-        var isChanged = false
-        if let _ = addressBookRef {
-            let addressBookPhone = getAddressBookPhone()
-            var setPhone = Set<String>()
-            for contact in addressBookPhone {
-                setPhone.insert(contact["ID"]!)
-            }
-            if let localAddressBook = def.objectForKey(kAddressBookDataKey) {
-                let localAddressBookArr = localAddressBook as! [Dictionary<String, String>]
-                var setLocal = Set<String>()
-                for contact in localAddressBookArr {
-                    setLocal.insert(contact["ID"]!)
+        let checkIfAuthen = ABAddressBookCreateWithOptions(nil, nil)
+        if let _ = checkIfAuthen {
+            let addressBookRef: ABAddressBook? = ABAddressBookCreateWithOptions(nil, nil).takeRetainedValue()
+            var isChanged = false
+            if let _ = addressBookRef {
+                let addressBookPhone = getAddressBookPhone()
+                var setPhone = Set<String>()
+                for contact in addressBookPhone {
+                    setPhone.insert(contact["ID"]!)
                 }
-                let setRemove = setLocal.subtract(setPhone) // remove contact
-                let setNew = setPhone.subtract(setLocal) // new contact add
-                if setRemove.count > 0 {
-                    var countRemove = 0
-                    for idRemove in setRemove {
-                        for localContact in localAddressBookArr {
-                            if localContact["ID"] == idRemove {
-                                countRemove++
-                                isChanged = true
-                            }
-                        }
+                if let localAddressBook = def.objectForKey(kAddressBookDataKey) {
+                    let localAddressBookArr = localAddressBook as! [Dictionary<String, String>]
+                    var setLocal = Set<String>()
+                    for contact in localAddressBookArr {
+                        setLocal.insert(contact["ID"]!)
                     }
-                    contactChanged.append("\(countRemove) contact(s) removed")
-                }
-                if setNew.count > 0 {
-                    var countNew = 0
-                    for idNew in setNew {
-                        for phoneContact in addressBookPhone {
-                            if phoneContact["ID"] == idNew {
-                                countNew++
-                                isChanged = true
-                            }
-                        }
-                    }
-                    contactChanged.append("\(countNew) contact(s) added")
-                }
-                for localContact in localAddressBookArr {
-                    for phoneContact in addressBookPhone {
-                        if localContact["ID"] == phoneContact["ID"] {
-                            let name = localContact["Name"]
-                            if name == phoneContact["Name"] {
-                                if localContact["Phone"] != phoneContact["Phone"] {
+                    let setRemove = setLocal.subtract(setPhone) // remove contact
+                    let setNew = setPhone.subtract(setLocal) // new contact add
+                    if setRemove.count > 0 {
+                        var countRemove = 0
+                        for idRemove in setRemove {
+                            for localContact in localAddressBookArr {
+                                if localContact["ID"] == idRemove {
+                                    countRemove++
                                     isChanged = true
-                                    let phone = phoneContact["Phone"]
-                                    let oldPhone = localContact["Phone"]
-                                    contactChanged.append("\(oldPhone!) -> \(phone!)")
-//                                    print("\(oldPhone!) changed to \(phone!)")
                                 }
                             }
-                            else {
-                                isChanged = true
-                                let namePhone = phoneContact["Name"]
-                                contactChanged.append("\(name!) -> \(namePhone!)")
-//                                print("\(name!) changed to \(namePhone!)")
+                        }
+                        contactChanged.append("\(countRemove) contact(s) removed")
+                    }
+                    if setNew.count > 0 {
+                        var countNew = 0
+                        for idNew in setNew {
+                            for phoneContact in addressBookPhone {
+                                if phoneContact["ID"] == idNew {
+                                    countNew++
+                                    isChanged = true
+                                }
+                            }
+                        }
+                        contactChanged.append("\(countNew) contact(s) added")
+                    }
+                    for localContact in localAddressBookArr {
+                        for phoneContact in addressBookPhone {
+                            if localContact["ID"] == phoneContact["ID"] {
+                                let name = localContact["Name"]
+                                if name == phoneContact["Name"] {
+                                    if localContact["Phone"] != phoneContact["Phone"] {
+                                        isChanged = true
+                                        let phone = phoneContact["Phone"]
+                                        let oldPhone = localContact["Phone"]
+                                        contactChanged.append("\(oldPhone!) -> \(phone!)")
+                                        //                                    print("\(oldPhone!) changed to \(phone!)")
+                                    }
+                                }
+                                else {
+                                    isChanged = true
+                                    let namePhone = phoneContact["Name"]
+                                    contactChanged.append("\(name!) -> \(namePhone!)")
+                                    //                                print("\(name!) changed to \(namePhone!)")
+                                }
                             }
                         }
                     }
+                    self.syncButton.hidden = false
+                    if isChanged {
+                        self.statusLabel.text = "Check done."
+                        showListOfChanged()
+                    }
+                    else {
+                        self.statusLabel.text = "No changes"
+                    }
                 }
-                self.syncButton.hidden = false
-                if isChanged {
-                    self.statusLabel.text = "Done. See the changed contacts in dialog."
-                    showListOfChanged()
-                }
-                else {
-                    self.statusLabel.text = "No changes"
-                }
+            }
+            else {
+                
             }
         }
         else {
-            
+            self.statusLabel.text = "Go to Setting/Privacy to grant access Address Book."
         }
     }
     
@@ -195,7 +203,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         var currentContactsList = [Dictionary<String, String>]()
         if let _ = addressBookRef {
             var contactDetails = [String : String]()
-            self.statusLabel.text = "Checking changes in Address Book..."
             let allContacts = ABAddressBookCopyArrayOfAllPeople(addressBookRef).takeRetainedValue() as Array
             for record in allContacts {
                 let contact: ABRecordRef = record
