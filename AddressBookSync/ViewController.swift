@@ -10,15 +10,17 @@ import UIKit
 import AddressBook
 import AddressBookUI
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     // MARK: UI's elements
     @IBOutlet weak var syncButton: UIButton!
     @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var dialogContactChangedBlurEffect: UIVisualEffectView!
+    @IBOutlet weak var contactChangedTableView: UITableView!
     
-
     // MARK: Class's properties
     let def = NSUserDefaults.standardUserDefaults()
+    var contactChanged = [String]()
     
     // MARK: View's lifecycle
     override func viewDidLoad() {
@@ -45,6 +47,16 @@ class ViewController: UIViewController {
         syncAddressBook()
     }
     
+    @IBAction func saveChangedTouchAction(sender: AnyObject) {
+        saveAddressBookPhoneToLocal()
+        closeDialogTouchAction(sender)
+    }
+    
+    @IBAction func closeDialogTouchAction(sender: AnyObject) {
+        dialogContactChangedBlurEffect.hidden = true
+        self.statusLabel.text = "Sync is done"
+        contactChanged.removeAll()
+    }
     
     // MARK: View's private method
     private func initialize() {
@@ -102,11 +114,45 @@ class ViewController: UIViewController {
     
     private func syncAddressBook() {
         let addressBookRef: ABAddressBook? = ABAddressBookCreateWithOptions(nil, nil).takeRetainedValue()
+        var isChanged = false
         if let _ = addressBookRef {
             let addressBookPhone = getAddressBookPhone()
+            var setPhone = Set<String>()
+            for contact in addressBookPhone {
+                setPhone.insert(contact["ID"]!)
+            }
             if let localAddressBook = def.objectForKey(kAddressBookDataKey) {
                 let localAddressBookArr = localAddressBook as! [Dictionary<String, String>]
-                var isChanged = false
+                var setLocal = Set<String>()
+                for contact in localAddressBookArr {
+                    setLocal.insert(contact["ID"]!)
+                }
+                let setRemove = setLocal.subtract(setPhone) // remove contact
+                let setNew = setPhone.subtract(setLocal) // new contact add
+                if setRemove.count > 0 {
+                    var countRemove = 0
+                    for idRemove in setRemove {
+                        for localContact in localAddressBookArr {
+                            if localContact["ID"] == idRemove {
+                                countRemove++
+                                isChanged = true
+                            }
+                        }
+                    }
+                    contactChanged.append("\(countRemove) contact(s) removed")
+                }
+                if setNew.count > 0 {
+                    var countNew = 0
+                    for idNew in setNew {
+                        for phoneContact in addressBookPhone {
+                            if phoneContact["ID"] == idNew {
+                                countNew++
+                                isChanged = true
+                            }
+                        }
+                    }
+                    contactChanged.append("\(countNew) contact(s) added")
+                }
                 for localContact in localAddressBookArr {
                     for phoneContact in addressBookPhone {
                         if localContact["ID"] == phoneContact["ID"] {
@@ -116,12 +162,15 @@ class ViewController: UIViewController {
                                     isChanged = true
                                     let phone = phoneContact["Phone"]
                                     let oldPhone = localContact["Phone"]
-                                    print("Difference Phone in \(oldPhone!) new Phone \(phone!)")
+                                    contactChanged.append("\(oldPhone!) -> \(phone!)")
+//                                    print("\(oldPhone!) changed to \(phone!)")
                                 }
                             }
                             else {
                                 isChanged = true
-                                print("Difference Name in \(name)")
+                                let namePhone = phoneContact["Name"]
+                                contactChanged.append("\(name!) -> \(namePhone!)")
+//                                print("\(name!) changed to \(namePhone!)")
                             }
                         }
                     }
@@ -181,7 +230,25 @@ class ViewController: UIViewController {
     }
     
     private func showListOfChanged() {
-        
+        dialogContactChangedBlurEffect.hidden = false
+        contactChangedTableView.reloadData()
+    }
+    
+    // MARK: Table view for contacts changed
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let element = contactChanged[indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier(CONTACT_CHANGED_CELL_ID)!
+        cell.textLabel?.text = element
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return contactChanged.count
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 44.0
     }
 }
 

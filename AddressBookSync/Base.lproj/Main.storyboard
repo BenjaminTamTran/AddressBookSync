@@ -27,7 +27,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U2h-v2-eJN">
-                                <rect key="frame" x="167.5" y="225" width="265" height="65"/>
+                                <rect key="frame" x="167" y="225" width="265" height="65"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="65" id="uA6-Mc-3L3"/>
                                     <constraint firstAttribute="width" constant="265" id="xGa-DK-sIv"/>
@@ -37,17 +37,114 @@
                                     <action selector="syncButtonTouchAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="a9j-4Z-O20"/>
                                 </connections>
                             </button>
+                            <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KYV-D6-dqy">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="aRG-wb-iIg">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="List of contact changed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vDl-On-PAp">
+                                            <rect key="frame" x="165" y="30" width="270" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="CiF-WD-qf2"/>
+                                                <constraint firstAttribute="width" constant="270" id="XaG-fR-y9k"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Syt-SE-aJO">
+                                            <rect key="frame" x="150" y="90" width="300" height="220"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="220" id="0qE-Vr-tFl"/>
+                                                <constraint firstAttribute="width" constant="300" id="xqs-kd-v3C"/>
+                                            </constraints>
+                                            <prototypes>
+                                                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CONTACT_CHANGED_CELL_ID" textLabel="6I3-YZ-qRW" style="IBUITableViewCellStyleDefault" id="Wcc-bn-HWE">
+                                                    <rect key="frame" x="0.0" y="28" width="300" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wcc-bn-HWE" id="Ihc-6M-PYs">
+                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="43.5"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <subviews>
+                                                            <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6I3-YZ-qRW">
+                                                                <rect key="frame" x="15" y="0.0" width="270" height="43.5"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </tableViewCellContentView>
+                                                </tableViewCell>
+                                            </prototypes>
+                                            <connections>
+                                                <outlet property="dataSource" destination="BYZ-38-t0r" id="Zkg-nl-veQ"/>
+                                                <outlet property="delegate" destination="BYZ-38-t0r" id="AQ6-j6-D9W"/>
+                                            </connections>
+                                        </tableView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4gh-OW-1ol">
+                                            <rect key="frame" x="160" y="330" width="128" height="38"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="128" id="YfY-mk-vfM"/>
+                                                <constraint firstAttribute="height" constant="38" id="gJy-Js-zNj"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                            <state key="normal" title="Sync changed" backgroundImage="ButtonBackground">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="saveChangedTouchAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KJb-n0-DWG"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ofg-88-D6F">
+                                            <rect key="frame" x="312" y="330" width="128" height="38"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="128" id="DQW-pd-h4e"/>
+                                                <constraint firstAttribute="height" constant="38" id="G6u-5z-ZPl"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                            <state key="normal" title="Close" backgroundImage="ButtonBackground">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="closeDialogTouchAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tDC-qT-WMQ"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="vDl-On-PAp" firstAttribute="top" secondItem="aRG-wb-iIg" secondAttribute="top" constant="30" id="Bbt-ar-5b2"/>
+                                        <constraint firstItem="4gh-OW-1ol" firstAttribute="top" secondItem="Syt-SE-aJO" secondAttribute="bottom" constant="20" id="Zg7-9g-Xcd"/>
+                                        <constraint firstItem="Ofg-88-D6F" firstAttribute="trailing" secondItem="Syt-SE-aJO" secondAttribute="trailing" constant="-10" id="cr8-yB-L2j"/>
+                                        <constraint firstItem="Syt-SE-aJO" firstAttribute="top" secondItem="vDl-On-PAp" secondAttribute="bottom" constant="20" id="hle-dH-7f2"/>
+                                        <constraint firstItem="Ofg-88-D6F" firstAttribute="top" secondItem="Syt-SE-aJO" secondAttribute="bottom" constant="20" id="u0q-AN-vbn"/>
+                                        <constraint firstItem="4gh-OW-1ol" firstAttribute="leading" secondItem="Syt-SE-aJO" secondAttribute="leading" constant="10" id="zgB-rp-MmP"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="Syt-SE-aJO" firstAttribute="centerX" secondItem="KYV-D6-dqy" secondAttribute="centerX" id="LcV-kA-ibC"/>
+                                    <constraint firstItem="vDl-On-PAp" firstAttribute="centerX" secondItem="KYV-D6-dqy" secondAttribute="centerX" id="dTQ-3g-F8B"/>
+                                </constraints>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="K5B-5G-hIT" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="100" id="1Mg-YY-Uad"/>
                             <constraint firstItem="K5B-5G-hIT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="S4W-5L-Ft9"/>
                             <constraint firstItem="U2h-v2-eJN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Uid-hh-Twt"/>
+                            <constraint firstAttribute="trailing" secondItem="KYV-D6-dqy" secondAttribute="trailing" id="WDp-4b-yqH"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="KYV-D6-dqy" secondAttribute="bottom" id="ccT-Qc-m6V"/>
                             <constraint firstItem="U2h-v2-eJN" firstAttribute="top" secondItem="K5B-5G-hIT" secondAttribute="bottom" constant="30" id="dUt-mV-FhI"/>
+                            <constraint firstItem="KYV-D6-dqy" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="fes-oa-tMu"/>
+                            <constraint firstItem="KYV-D6-dqy" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qm8-OK-Uon"/>
                             <constraint firstAttribute="trailing" secondItem="K5B-5G-hIT" secondAttribute="trailing" constant="10" id="zEA-X6-uZy"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="contactChangedTableView" destination="Syt-SE-aJO" id="rc9-S3-et4"/>
+                        <outlet property="dialogContactChangedBlurEffect" destination="KYV-D6-dqy" id="bxd-vX-5B1"/>
                         <outlet property="statusLabel" destination="K5B-5G-hIT" id="gLr-Yt-T3O"/>
                         <outlet property="syncButton" destination="U2h-v2-eJN" id="BcI-sZ-43d"/>
                     </connections>

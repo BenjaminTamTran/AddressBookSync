@@ -9,3 +9,4 @@
 import Foundation
 
 let kAddressBookDataKey = "AddressBookDataKey"
+let CONTACT_CHANGED_CELL_ID = "CONTACT_CHANGED_CELL_ID"
