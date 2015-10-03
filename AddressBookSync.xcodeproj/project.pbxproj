@@ -17,7 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F8F3555C1BBEBB93000EEA2D /* AddressBookSync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AddressBookSync.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8F3555C1BBEBB93000EEA2D /* Sync Address.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sync Address.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8F3555F1BBEBB93000EEA2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8F355611BBEBB93000EEA2D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F8F355641BBEBB93000EEA2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -50,7 +50,7 @@
 		F8F3555D1BBEBB93000EEA2D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F8F3555C1BBEBB93000EEA2D /* AddressBookSync.app */,
+				F8F3555C1BBEBB93000EEA2D /* Sync Address.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -87,7 +87,7 @@
 			);
 			name = AddressBookSync;
 			productName = AddressBookSync;
-			productReference = F8F3555C1BBEBB93000EEA2D /* AddressBookSync.app */;
+			productReference = F8F3555C1BBEBB93000EEA2D /* Sync Address.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -260,7 +260,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.benjaminsoft.AddressBookSync;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Sync Address";
 				PROVISIONING_PROFILE = "6fe8e88b-f899-4d2f-9178-854b4e410ba1";
 			};
 			name = Debug;
@@ -273,7 +273,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.benjaminsoft.AddressBookSync;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Sync Address";
 				PROVISIONING_PROFILE = "6fe8e88b-f899-4d2f-9178-854b4e410ba1";
 			};
 			name = Release;
